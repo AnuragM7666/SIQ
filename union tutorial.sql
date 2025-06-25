@@ -1,0 +1,34 @@
+-- unions 
+
+select first_name, last_name
+from employee_demographics
+union all
+select first_name, last_name
+from employee_salary;
+
+select first_name, last_name, 'Old Man' as label
+from employee_demographics
+where age>40 and gender='male'
+union
+select first_name, last_name, 'Old Lady' as label
+from employee_demographics
+where age>40 and gender='female'
+union 
+select first_name,last_name, 'highly paid emp' as label
+from employee_salary
+where salary>70000;
+
+#Intersect
+select employee_demographics.* from employee_demographics
+INNER Join employee_salary
+using (employee_id);
+
+#minus
+SELECT employee_demographics.*
+FROM employee_demographics #there is no such row diff between two tables here
+LEFT JOIN employee_salary USING (employee_id)
+WHERE employee_salary.employee_id IS NULL;
+
+
+
+
