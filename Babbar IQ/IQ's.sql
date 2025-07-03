@@ -29,3 +29,59 @@ select CONCAT(First_Name, ' ', Last_Name) as full_name from Worker;
 select * from Worker
 ORDER BY first_name, Department desc;
 
+-- Q.13 to print details of workers with first_name as 'John' and 'Emiky
+select * from Worker 
+where first_name IN ('John', 'Emily');
+
+-- Q.14 same as Q.13 but excluding those names 
+select * from Worker 
+where first_name NOT IN ('John', 'Emily');
+
+-- Q.15 to print Workers with Department as 'A*'
+select * from Worker where Department LIKE 'A%'; 
+
+-- Q16 Workers whose first_name contain 'a'
+select * from Worker where first_name LIKE '%a%';
+
+-- Q18 Workers whose first_name ends with 'l' and contains 7 letter
+select * from Worker where first_name Like '______l';
+
+-- Q.19 Salary lies between 100000 to 200000
+select * from Worker where salary BETWEEN 100000 AND 200000;
+
+-- Q.20 Workers who joined January 2020
+select * from Worker where YEAR(Joining_Date)=2020 and MONTH(Joining_Date)=1;
+
+-- Q.21 Count of workers in Department 'Admin'
+select department, COUNT(*) from Worker where Department="Admin";
+
+-- Q.22 worker full names with salaries>=50000 and <=100000
+select CONCAT(first_name,' ', last_name), salary from Worker 
+where salary>=50000 and salary<=100000;
+
+-- Q.23 No.of workers from each deaprtment in descending order
+select department, COUNT(Worker_ID) as No_of_Workers from Worker
+GROUP BY department 
+ORDER BY COUNT(Worker_ID) desc;
+
+-- Q.24 Workers who are also Managers
+select w.* from Worker w 
+inner join Title t
+ON w.Worker_ID=t.Worker_REF_ID
+where t.Worker_Title="Manager";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

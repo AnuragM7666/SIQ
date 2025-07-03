@@ -1,4 +1,4 @@
-create database sqlIQ;
+-- create database sqlIQ;
 show databases;
 use sqlIQ;
 
