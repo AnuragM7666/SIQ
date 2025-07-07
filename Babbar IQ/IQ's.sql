@@ -70,12 +70,50 @@ inner join Title t
 ON w.Worker_ID=t.Worker_REF_ID
 where t.Worker_Title="Manager";
 
+-- Q.25 fetch number of same titles in the ORG of different types
+ select worker_title,COUNT(*) as count from title 
+ group by worker_title;
+ 
+ -- Q.26 to show only odd rows from a table
+ select * from Worker 
+ where Worker_ID%2=1;
+ 
+ -- Q.28 to clone a new table from another table
+ create table worker_clone LIKE worker;
+ insert into worker_clone select * from worker;
+ 
+ -- Q.29 to fetch intersecting records of two tables
+ select worker.* from worker 
+ inner join worker_clone using(worker_id);
+ 
+ -- Q.30 to show records from one table that another table does not have
+ select W.* from Worker w
+ left join worker_clone wc
+ using(worker_id) 
+ where wc.worker_id is null;
 
+-- Q.32 to show top(n) 2 records of a table order by salary in descending
+select * from Worker 
+Order by salary desc
+LIMIT 2;
 
+-- Q.33 to determine nth (n=3) highest salary from a table
+select * from Worker 
+Order by salary desc
+LIMIT 2,1;
 
-
-
-
+ -- Q.34 to determine nth (n=3) highest salary from a table without using LIMIT keyword
+ select salary from worker w1
+ where 2=(
+ select COUNT(distinct (w2.salary))
+ from worker w2
+ where w2.salary>w1.salary
+ );
+ 
+ -- Q.35 to fetch list of employees with same salary
+ select w1.* from worker w1, worker w2
+ where w1.salary=w2.salary AND w1.worker_id!=w2.worker_id;
+ 
 
 
 
