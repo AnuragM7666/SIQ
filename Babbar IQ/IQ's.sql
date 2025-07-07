@@ -114,11 +114,71 @@ LIMIT 2,1;
  select w1.* from worker w1, worker w2
  where w1.salary=w2.salary AND w1.worker_id!=w2.worker_id;
  
+-- Q.36 to show the 2nd highest salary using sub-query
+select max(salary) from Worker 
+where salary NOT IN (select max(salary) from worker);
 
+-- Q.37 to show one row twice in results from a table
+select * from worker
+UNION ALL
+select * from worker
+order by worker_id;
 
+-- Q.38 workers with no bonus
+select worker_id from worker
+where worker_id NOT IN 
+(select worker_ref_id from Bonus);
 
+-- Q.39 to fetch first 50% of records from table
+select * from Worker where worker_id <=
+(select count(worker_id)/2 from worker);
 
+-- Q.40 to fetch departments that have less than 2 people init
+select department, COUNT(department) as depCount
+from Worker
+group by department 
+having depCount<2;
 
+-- Q.41 to show all departments along with number of people in there
+select department, COUNT(department) as depCount
+from Worker
+group by department ;
+
+-- Q.42 to show the last record from table
+select * from Worker 
+where worker_id =
+(select max(worker_id) from worker);
+
+-- Q.44 to fetch last 2 records from table
+(select * from Worker 
+order by worker_id desc 
+LIMIT 2)
+order by worker_id;
+
+-- Q.45 to print name of employees having highest salary in each department 
+select w.* from 
+(select max(salary) as maxSal, department from worker 
+group by department) temp
+inner join worker w
+on temp.department=w.department and temp.maxSal=w.salary;
+
+-- Q.46 to fetch 3 max salaries 
+select distinct salary from worker w1
+where 3>= 
+(select count(distinct salary) from worker w2 where w1.salary<=w2.salary)
+order by w1.salary desc;
+
+-- Q.49 to fetch departments along with total salary paid for each of them
+select department, Sum(salary) as depSal
+from Worker
+group by department 
+order by depSal desc;
+
+-- Q.50 names of workers who earn highest salary 
+select first_name, salary 
+from Worker 
+where salary =
+(select max(salary) from worker);
 
 
 
