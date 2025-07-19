@@ -118,6 +118,11 @@ LIMIT 2,1;
 select max(salary) from Worker 
 where salary NOT IN (select max(salary) from worker);
 
+or 
+
+select max(salary) as SecondHighestSalary from Worker
+where salary < (select max(salary) from Worker);
+
 -- Q.37 to show one row twice in results from a table
 select * from worker
 UNION ALL
